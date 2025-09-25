@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: EC2 Pounds-to-Kilogram Converter
+  version: 1.0.0
+components:
+  schemas:
+    KilogramConversion: 
+      type: object
+      properties:
+        # Pounds (lbs) input
+        lbs: 
+          type: string
+        # Kilogram (kg) output
+        kg: 
+          type: string
+        # Formula used in conversion
+        formula: 
+          type: string
+    Error:
+      type: object
+      properties:
+        # Error message
+        error: 
+          type: string                          
+
+paths:
+  /convert:
+    get:
+      parameters:
+        - name: lbs
+          in: query
+          description: Pounds to be converted into kilograms via formula
+          required: true
+          schema:
+            type: string
+      summary: Get kilograms converted from pounds with formula
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KilogramConversion'
+        '400':
+          description: Query param lbs is required and must be a number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'          
+        '422':
+          description: lbs must be a non-negative, finite number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                  
+

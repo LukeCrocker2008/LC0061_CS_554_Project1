@@ -1,0 +1,11 @@
+[Unit]
+Description=CS554 Project 1 Service
+Before=default.target
+
+[Service]
+ExecStart=/usr/bin/node /home/ec2-user/p1/server.js
+Type=simple
+
+[Install]
+WantedBy=default.target
+RequiredBy=default.target
